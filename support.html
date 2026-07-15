@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Involved & Support | SEED Foundation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --primary: #121e31;        /* Deep Forest Green */
+            --primary-light: #2d5a45;
+            --accent: #d97706;         /* Warm Gold/Amber */
+            --accent-hover: #b45309;
+            --text-dark: #1f2937;
+            --text-muted: #4b5563;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border-color: #e5e7eb;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-width: 1200px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* --- UTILITY CLASSES --- */
+        .container {
+            width: 90%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-tag {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+        }
+
+        /* --- STICKY HEADER & NAVBAR --- */
+        header {
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        /* --- HAMBURGER MENU BUTTON --- */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* --- OVERLAY --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- SIDEBAR NAV MENU --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            max-width: 85%;
+            height: 100vh;
+            background-color: var(--bg-white);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.active {
+            right: 0;
+        }
+
+        .navbar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .navbar-brand span {
+            color: var(--accent);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            line-height: 1;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: block;
+            padding: 8px 0;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(30, 61, 47, 0.9), rgba(30, 61, 47, 0.95)), 
+                        url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200') no-repeat center center/cover;
+            color: var(--bg-white);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* --- SECTION 1: DONATION TIERS --- */
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .tier-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-card.popular {
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.1);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent);
+            color: var(--bg-white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .tier-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 15px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .tier-amount span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            vertical-align: super;
+        }
+
+        .tier-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+        }
+
+        .tier-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            min-height: 70px;
+        }
+
+        .btn-tier {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .tier-card.popular .btn-tier {
+            background-color: var(--accent);
+        }
+
+        .tier-card.popular .btn-tier:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-tier:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* --- SECTION 2: SPONSOR A CHILD --- */
+        .sponsor-section {
+            background-color: var(--bg-light);
+        }
+
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .child-card {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .child-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.05);
+        }
+
+        .child-img-wrapper {
+            height: 250px;
+            position: relative;
+            background-color: #eee;
+        }
+
+        .child-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .child-status {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(30, 61, 47, 0.9);
+            color: var(--bg-white);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .child-info {
+            padding: 30px;
+        }
+
+        .child-name-age {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .child-name-age h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .child-age {
+            background-color: var(--bg-light);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .child-story {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .child-details {
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .child-details strong {
+            color: var(--text-dark);
+        }
+
+        .btn-sponsor {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-sponsor:hover {
+            background-color: var(--primary);
+            color: var(--bg-white);
+        }
+
+        /* --- SECTION 3: VOLUNTEER & PARTNER FORMS --- */
+        .form-section {
+            background-color: var(--bg-white);
+        }
+
+        .form-toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .btn-toggle {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-toggle.active {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            border-color: var(--primary);
+        }
+
+        .form-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+        }
+
+        .signup-form {
+            display: none;
+        }
+
+        .signup-form.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+        }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            padding: 80px 0 30px 0;
+            border-top: 5px solid var(--accent);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            max-width: var(--max-width);
+            margin: 0 auto 50px auto;
+            width: 90%;
+        }
+
+        .footer-col h3 {
+            color: var(--bg-white);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-col p {
+            color: #a3b3c9;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--bg-white);
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #a3b3c9;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #a3b3c9;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .footer-bottom p {
+            color: #a3b3c9;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .form-wrapper {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-toggle-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <header>
+        <a href="index.html" class="logo">SEED<span>.</span></a>
+        
+        <!-- Toggle Button for sidebar -->
+        <button class="menu-toggle" aria-label="Open Navigation" id="menuOpenBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- SIDEBAR NAV MENU -->
+    <nav class="navbar" id="sidebarMenu">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">SEED<span>.</span></a>
+            <button class="close-btn" aria-label="Close Navigation" id="menuCloseBtn">&times;</button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+            <li><a href="about-seed.html" onclick="closeMenu()">About & Impact</a></li>            <li><a href="join-seed.html" onclick="closeMenu()">Partners</a></li>
+            <li><a href="support.html" onclick="closeMenu()" class="active" style="color: var(--accent);">Get Involved</a></li>
+            <li><a href="contact-seed.html" onclick="closeMenu()">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container" style="padding: 0;">
+            <h1>Every SEED Needs Support to Grow</h1>
+            <p>Your support directly builds classrooms, trains educators, and supplies essential materials to communities that need them most.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: DONATION TIERS -->
+    <section class="container" id="donate">
+        <div class="text-center">
+            <span class="section-tag">Direct Support</span>
+            <h2 class="section-title">Empower with Your Gift</h2>
+            <p class="section-subtitle">Select a funding package to secure educational resources and continuous mentorship for our classrooms.</p>
+        </div>
+        <div class="tier-grid">
+            <!-- Tier 1 -->
+            <div class="tier-card">
+                <div>
+                    <h3>Supply Kit</h3>
+                    <div class="tier-amount"><span>$</span>15</div>
+                    <p>Provides a complete kit of school notebooks, writing supplies, and standard textbooks for one child for an entire semester.</p>
+                </div>
+                <button class="btn-tier" onclick="alert('Thank you! Redirecting to secure donation portal...')">Donate $15</button>
+            </div>
+            <!-- Tier 2 (Popular) -->
+            <div class="tier-card popular">
+                <div class="popular-badge">Most Impact</div>
+                <div>
+                    <h3>Class Desk Support</h3>
+                    <div class="tier-amount"><span>$</span>50</div>
+                    <p>Covers structural classroom setups, including durable modular study desks and ergonomic whiteboards for a newly opened learning hub.</p>
+                </div>
+                <button class="btn-tier" onclick="alert('Thank you! Redirecting to secure donation portal...')">Donate $50</button>
+            </div>
+            <!-- Tier 3 -->
+            <div class="tier-card">
+                <div>
+                    <h3>Educator Funding</h3>
+                    <div class="tier-amount"><span>$</span>120</div>
+                    <p>Funds professional, ongoing teacher training programs and resources for local educators working directly inside our settlement classrooms.</p>
+                </div>
+                <button class="btn-tier" onclick="alert('Thank you! Redirecting to secure donation portal...')">Donate $120</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SPONSOR A CHILD -->
+    <section class="sponsor-section" id="sponsor">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag">Direct Sponsorship</span>
+                <h2 class="section-title">Sponsor a Future</h2>
+                <p class="section-subtitle">By becoming a sponsor, you build a personal bridge of hope. Your monthly funding guarantees regular classroom access, nutrition, and guidance.</p>
+            </div>
+            <div class="sponsor-grid">
+                <!-- Child 1 -->
+                <div class="child-card">
+                    <div class="child-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=600" alt="Student profile">
+                        <span class="child-status">Awaiting Sponsor</span>
+                    </div>
+                    <div class="child-info">
+                        <div class="child-name-age">
+                            <h3>Aarav Sharma</h3>
+                            <span class="child-age">Age 9</span>
+                        </div>
+                        <p class="child-story">Aarav has a deep curiosity for mathematics and puzzle-solving. He dreams of studying digital engineering when he grows up.</p>
+                        <div class="child-details">
+                            <span>Hub Location: <strong>Sector-B Learning Center</strong></span>
+                        </div>
+                        <button class="btn-sponsor" onclick="alert('Thank you for choosing to sponsor Aarav! We will connect with you via email.')">Sponsor Aarav</button>
+                    </div>
+                </div>
+                <!-- Child 2 -->
+                <div class="child-card">
+                    <div class="child-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&q=80&w=600" alt="Student profile">
+                        <span class="child-status">Awaiting Sponsor</span>
+                    </div>
+                    <div class="child-info">
+                        <div class="child-name-age">
+                            <h3>Fatima Yusuf</h3>
+                            <span class="child-age">Age 11</span>
+                        </div>
+                        <p class="child-story">Fatima reads every storybook she can find. She loves creative writing and wants to become a community journalist or teacher.</p>
+                        <div class="child-details">
+                            <span>Hub Location: <strong>North-West Settlement</strong></span>
+                        </div>
+                        <button class="btn-sponsor" onclick="alert('Thank you for choosing to sponsor Fatima! We will connect with you via email.')">Sponsor Fatima</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: SIGN UP FORMS -->
+    <section class="form-section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag">Take Action</span>
+                <h2 class="section-title">Join the Movement</h2>
+                <p class="section-subtitle">Whether you want to offer your professional skills as a volunteer or align your corporate resources, we have a place for you.</p>
+            </div>
+
+            <div class="form-toggle-container">
+                <button class="btn-toggle active" id="btnVolunteer">Volunteer with SEED</button>
+                <button class="btn-toggle" id="btnPartner">Partner with SEED</button>
+            </div>
+
+            <div class="form-wrapper">
+                <!-- VOLUNTEER FORM -->
+                <form id="volunteerForm" class="signup-form active" onsubmit="event.preventDefault(); alert('Success! Your volunteer application has been submitted. Our team will reach out to you shortly.')">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vName">Full Name</label>
+                            <input type="text" id="vName" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vEmail">Email Address</label>
+                            <input type="email" id="vEmail" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vRole">Primary Skillset</label>
+                            <select id="vRole" required>
+                                <option value="" disabled selected>Select a path</option>
+                                <option value="teaching">Teaching / Tutoring</option>
+                                <option value="design">UI/UX Graphic Design</option>
+                                <option value="development">Web Development / IT Tech</option>
+                                <option value="admin">Admin / Operations</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vHours">Availability per week</label>
+                            <select id="vHours" required>
+                                <option value="" disabled selected>Select hours</option>
+                                <option value="1-3">1 - 3 hours</option>
+                                <option value="4-7">4 - 7 hours</option>
+                                <option value="8+">8+ hours</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="vBio">Briefly tell us why you want to join SEED</label>
+                            <textarea id="vBio" rows="4" placeholder="Share a brief statement about your drive to work in marginalized communities..." required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Submit Volunteer Application</button>
+                </form>
+
+                <!-- PARTNER FORM -->
+                <form id="partnerForm" class="signup-form" onsubmit="event.preventDefault(); alert('Thank you! Your partnership inquiry has been submitted. We look forward to collaborating.')">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pOrg">Organization Name</label>
+                            <input type="text" id="pOrg" placeholder="Company or School Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pContact">Contact Person</label>
+                            <input type="text" id="pContact" placeholder="Jane Smith" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pEmail">Corporate Email</label>
+                            <input type="email" id="pEmail" placeholder="partner@org.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pType">Type of Alliance</label>
+                            <select id="pType" required>
+                                <option value="" disabled selected>Select type</option>
+                                <option value="corporate">Corporate Sponsorship / CSR</option>
+                                <option value="school">Educational Institution Alignment</option>
+                                <option value="ngo">Inter-NGO Collaboration</option>
+                                <option value="tech">Infrastructure / Tech Donation</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="pIdea">Collaboration Vision</label>
+                            <textarea id="pIdea" rows="4" placeholder="How would your organization love to collaborate with SEED?" required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Inquire About Partnership</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">SEED<span>.</span></a>
+                <p>Nurturing minds, harvesting futures. We are a registered non-profit organization dedicated to establishing equitable education for children in slum communities.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-seed.html">About & Impact</a></li>
+                    <li><a href="support.html">Get Involved</a></li>
+                    <li><a href="contact-seed.html">News & Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Get Involved</h3>
+                <ul class="footer-links">
+                    <li><a href="support.html">Sponsor a Child</a></li>
+                    <li><a href="support.html">Make a Donation</a></li>
+                    <li><a href="support.html">Volunteer Programs</a></li>
+                    <li><a href="contact-seed.html">Corporate Partnerships</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul class="footer-contact-info">
+                    <li>📍 Abuja, Federal Capital Territory, Nigeria</li>
+                    <li>✉️ seedfoundation4489
+@gmail.com</li>
+                    <li>📞 +234 7011818837</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SEED Foundation. All rights reserved. Empowering minds, transforming communities.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // --- Sidebar Menu Logic ---
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const menuOpenBtn = document.getElementById('menuOpenBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+        const overlay = document.getElementById('overlay');
+
+        function openMenu() {
+            sidebarMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMenu() {
+            sidebarMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        menuOpenBtn.addEventListener('click', openMenu);
+        menuCloseBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // --- Volunteer / Partner Form Toggle logic ---
+        const btnVolunteer = document.getElementById('btnVolunteer');
+        const btnPartner = document.getElementById('btnPartner');
+        const volunteerForm = document.getElementById('volunteerForm');
+        const partnerForm = document.getElementById('partnerForm');
+
+        btnVolunteer.addEventListener('click', () => {
+            btnVolunteer.classList.add('active');
+            btnPartner.classList.remove('active');
+            volunteerForm.classList.add('active');
+            partnerForm.classList.remove('active');
+        });
+
+        btnPartner.addEventListener('click', () => {
+            btnPartner.classList.add('active');
+            btnVolunteer.classList.remove('active');
+            partnerForm.classList.add('active');
+            volunteerForm.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
