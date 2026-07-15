@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Our Impact | SEED Foundation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --primary: #121e31;        /* Deep Forest Green matching Page 1 */
+            --primary-light: #2d5a45;
+            --accent: #d97706;         /* Warm Gold/Amber */
+            --accent-hover: #b45309;
+            --text-dark: #1f2937;
+            --text-muted: #4b5563;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border-color: #e5e7eb;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-width: 1200px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body.menu-open {
+            overflow: hidden; /* Prevents background scrolling when sidebar is open */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* --- UTILITY CLASSES --- */
+        .container {
+            width: 90%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-tag {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+        }
+
+        /* --- STICKY HEADER & NAVBAR --- */
+        header {
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        /* --- HAMBURGER MENU BUTTON --- */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* --- OVERLAY --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- SIDEBAR NAV MENU --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Hidden on the right */
+            width: 320px;
+            max-width: 85%;
+            height: 100vh;
+            background-color: var(--bg-white);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.active {
+            right: 0;
+        }
+
+        .navbar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .navbar-brand span {
+            color: var(--accent);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            line-height: 1;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        /* Sidebar Links */
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: block;
+            padding: 8px 0;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(30, 61, 47, 0.9), rgba(30, 61, 47, 0.95)), 
+                        url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=1200') no-repeat center center/cover;
+            color: var(--bg-white);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* --- SECTION 1: OUR STORY --- */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .story-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .story-image-wrapper {
+            position: relative;
+        }
+
+        .story-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: block;
+        }
+
+        .story-badge {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            background-color: var(--accent);
+            color: var(--bg-white);
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(217, 119, 6, 0.3);
+        }
+
+        .story-badge h4 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        /* --- SECTION 2: VALUES & VISION --- */
+        .values-section {
+            background-color: var(--bg-light);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background-color: var(--bg-white);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            border-color: var(--accent);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .value-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .value-card p {
+            color: var(--text-muted);
+        }
+
+        /* --- SECTION 3: OUR IMPACT & STATS --- */
+        .stats-banner {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- STUDENT SPOTLIGHT (REPRESENTING IMPACT) --- */
+        .spotlight-section {
+            background-color: var(--bg-white);
+        }
+
+        .spotlight-card {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            background-color: var(--bg-light);
+            border-radius: 20px;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .spotlight-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 400px;
+        }
+
+        .spotlight-content {
+            padding: 50px;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .spotlight-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .spotlight-author {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .spotlight-meta {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* --- SECTION 4: MEET THE TEAM --- */
+        .team-section {
+            background-color: var(--bg-light);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background-color: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .team-img-container {
+            height: 280px;
+            overflow: hidden;
+            background-color: #eee;
+        }
+
+        .team-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .team-card:hover .team-img-container img {
+            transform: scale(1.05);
+        }
+
+        .team-info {
+            padding: 25px 20px;
+        }
+
+        .team-info h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .team-info p {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .team-bio {
+            color: var(--text-muted) !important;
+            font-size: 0.88rem !important;
+            font-weight: 400 !important;
+            line-height: 1.5;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            padding: 80px 0 30px 0;
+            border-top: 5px solid var(--accent);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            max-width: var(--max-width);
+            margin: 0 auto 50px auto;
+            width: 90%;
+        }
+
+        .footer-col h3 {
+            color: var(--bg-white);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-col p {
+            color: #a3b3c9;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--bg-white);
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #a3b3c9;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #a3b3c9;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .footer-bottom p {
+            color: #a3b3c9;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .story-grid, .spotlight-card {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .spotlight-image {
+                min-height: 300px;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <header>
+        <a href="index.html" class="logo">SEED<span>.</span></a>
+        
+        <!-- Toggle Button for sidebar -->
+        <button class="menu-toggle" aria-label="Open Navigation" id="menuOpenBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- OVERLAY (Dims background when menu is open) -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- SIDEBAR NAV MENU -->
+    <nav class="navbar" id="sidebarMenu">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">SEED<span>.</span></a>
+            <button class="close-btn" aria-label="Close Navigation" id="menuCloseBtn">&times;</button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+            <li><a href="about.html" onclick="closeMenu()" class="active" style="color: var(--accent);">About & Impact</a></li>
+            <li><a href="contact.html" onclick="closeMenu()">News & Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container" style="padding: 0;">
+            <h1>Sowing the Seeds of Digital Education</h1>
+            <p>Our geography shouldn't dictate our destiny. Discover how we're redefining slum narratives by empowering young minds through modern education, mentorship, and key digital literacy.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: OUR STORY -->
+    <section class="container" id="about">
+        <div class="story-grid">
+            <div class="story-image-wrapper">
+                <img class="story-image" src="writing-competition.jpg" alt="Children learning in classroom">
+                <div class="story-badge">
+                    <h4>Empower</h4>
+                    <p>Through Tech</p>
+                </div>
+            </div>
+            <div class="story-content">
+                <span class="section-tag">How it started</span>
+                <h2>Redefining Slum Narratives Through Real Opportunity</h2>
+                <p><strong>SEED Foundation</strong> — <em>Sustainable Education and Empowerment through Digital Foundation in Slums</em> — was born from a dream far greater than the four walls of a traditional classroom.</p>
+                <p>What started as a quiet, heartfelt passion to inspire underserved pupils has rapidly blossomed into a life-changing mission to touch whole communities. We believe that education remains the single most effective tool for community transformation. Anyone who invests in the education and empowerment of young people is ultimately investing in the future of our nation.</p>
+                <p>We work tirelessly to amplify noble efforts by recognizing academic excellence, supporting learners from vulnerable and underserved neighborhoods, and inspiring the next generation of digital leaders.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: CORE VALUES / VISION -->
+    <section class="values-section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag">Our Core Pillars</span>
+                <h2 class="section-title">What Drives Our Mission</h2>
+                <p class="section-subtitle">We build bridges over poverty, neglect, and digital exclusion through three core commitments:</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <span class="value-icon">🎓</span>
+                    <h3>Academic Excellence</h3>
+                    <p>We nurture student potential, reward academic brilliance, and offer scholarship programs to support promising learners from underserved communities.</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">💻</span>
+                    <h3>Digital Literacy</h3>
+                    <p>We break down barriers of technological exclusion by bringing computers, coding basics, and fundamental digital literacy straight to the children in slums.</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">🤝</span>
+                    <h3>Mentorship & Leadership</h3>
+                    <p>We restore confidence and build active leaders. Our programs inspire students to rise above challenges, fulfill their purpose, and build brighter futures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: OUR IMPACT & STATS -->
+    <section class="stats-banner" id="achievements">
+        <div class="container" style="padding: 20px 0;">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 class="counter" data-target="2025">0</h3>
+                    <p>Award Year</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="100">0</h3>
+                    <p>% Free Education</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="500">0</h3>
+                    <p>Digital Learners Helped</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="10000">0</h3>
+                    <p>Lives We Hope to Shape</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: STUDENT SPOTLIGHT (REAL IMPACT) -->
+    <section class="spotlight-section" id="impact">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag">Voices of Hope</span>
+                <h2 class="section-title">Impact Spotlight</h2>
+                <p class="section-subtitle">See how digital literacy is actively shifting pathways for children inside our local programs.</p>
+            </div>
+            <div class="spotlight-card">
+                <img class="spotlight-image" src="student-1.jpg" alt="Smiling student using device">
+                <div class="spotlight-content">
+                    <div class="quote-icon">“</div>
+                    <p class="spotlight-quote">Before the SEED program came to our community, I had never touched a computer. I thought technology was only for wealthy families. Now, I am learning coding basics and digital design. This program taught me that I can dream without limits.</p>
+                    <p class="spotlight-author">Oyebiyi A.</p>
+                    <p class="spotlight-meta">Top 10 • Digital Skills Finalist</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: MEET THE TEAM (UPDATED FOR SERAH) -->
+    <section class="team-section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-tag">The Heartbeat</span>
+                <h2 class="section-title">The Vision Behind SEED</h2>
+                <p class="section-subtitle">A passion born from the classroom to heal communities and uplift the nation.</p>
+            </div>
+            <div class="team-grid" style="display: flex; justify-content: center;">
+                <!-- Founder & Leader Card -->
+                <div class="team-card" style="max-width: 400px; width: 100%;">
+                    <div class="team-img-container">
+                        <img src="serah-founder.jpg" alt="Serah Yusuf">
+                    </div>
+                    <div class="team-info">
+                        <h4>Serah Yusuf</h4>
+                        <p>Founder & President</p>
+                        <p class="team-bio">English teacher at Wisdom International School of Excellence (WISE) and prestigious national winner of the **Maltina Teacher of the Year 2025** award. She established SEED to ensure kids in underserved communities receive the opportunities they deserve.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">SEED<span>.</span></a>
+                <p>Nurturing potential, restoring confidence, and raising a generation that will rise above challenges and thrive. Sustainable Education and Empowerment through Digital Foundation in Slums is a registered NGO.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About & Impact</a></li>
+                    <li><a href="contact.html">News & Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Our Areas</h3>
+                <ul class="footer-links">
+                    <li><a href="contact.html">Digital Literacy Centers</a></li>
+                    <li><a href="contact.html">Academic Scholarships</a></li>
+                    <li><a href="contact.html">Community Empowerment</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul class="footer-contact-info">
+                    <li>📍 Wisdom Int'l School of Excellence</li>
+                    <li>✉️ seedfoundation4489
+@gmail.com</li>
+                    <li>📞 + 234 7011818837</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SEED Foundation. All rights reserved. Empowering minds, transforming communities.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // --- Sidebar Menu Logic ---
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const menuOpenBtn = document.getElementById('menuOpenBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+        const overlay = document.getElementById('overlay');
+
+        function openMenu() {
+            sidebarMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMenu() {
+            sidebarMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        // Attach Event Listeners
+        menuOpenBtn.addEventListener('click', openMenu);
+        menuCloseBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // --- Stat Counters Animation ---
+        const counters = document.querySelectorAll('.counter');
+        const speed = 100; // Lower is faster
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const count = parseInt(counter.innerText);
+                    const increment = Math.ceil(target / speed);
+
+                    if (count < target) {
+                        counter.innerText = count + increment;
+                        setTimeout(updateCount, 25);
+                    } else {
+                        if (target === 2025) {
+                            counter.innerText = target;
+                        } else if (target === 100) {
+                            counter.innerText = target + "%";
+                        } else if (target === 500) {
+                            counter.innerText = target + "+";
+                        } else {
+                            counter.innerText = "10k+";
+                        }
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Simple Intersection Observer to start counters when scrolled into view
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('.stats-banner'));
+    </script>
+</body>
+</html>
